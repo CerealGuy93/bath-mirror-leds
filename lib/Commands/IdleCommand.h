@@ -10,7 +10,7 @@ class IdleCommand : public LedCommand {
 
     protected:
         void Update(int percent) override {
-            //this->wrapper.setAllLeds();
+            this->wrapper.setAllLeds(255, 0, 0);
         }
 };
 

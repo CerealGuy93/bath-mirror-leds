@@ -12,14 +12,14 @@
 class LedWrapper {
     public:
         LedWrapper() {
-            //this->pixels_large = Adafruit_NeoPixel(COUNT_LARGE_STRIPE, PIN_LARGE_STRIPE, NEO_GRB + NEO_KHZ800);
-            //this->pixels_short = Adafruit_NeoPixel(COUNT_SHORT_STRIPE, PIN_SHORT_STRIPE, NEO_GRB + NEO_KHZ800);
+            this->pixels_large = Adafruit_NeoPixel(COUNT_LARGE_STRIPE, PIN_LARGE_STRIPE, NEO_GRB + NEO_KHZ800);
+            this->pixels_short = Adafruit_NeoPixel(COUNT_SHORT_STRIPE, PIN_SHORT_STRIPE, NEO_GRB + NEO_KHZ800);
         }
 
         void setAllLeds(int r, int g, int b) {
-            //pixels_large.fill(pixels_large.Color(r, g, b), 0, COUNT_LARGE_STRIPE);
-            //pixels_short.fill(pixels_short.Color(r, g, b), 0, COUNT_SHORT_STRIPE);
-            //show();
+            pixels_large.fill(pixels_large.Color(r, g, b), 0, COUNT_LARGE_STRIPE);
+            pixels_short.fill(pixels_short.Color(r, g, b), 0, COUNT_SHORT_STRIPE);
+            show();
         }
 
         void setBrightness(int brightness) {
@@ -39,13 +39,18 @@ class LedWrapper {
                 return;
             }
 
-            Serial.printf("Turning on %d (%f) LEDS\n", (int)round(ledsOn), ledsOn);
+            auto ledInt = (int) round(ledsOn);
+            Serial.printf("Turning on %d (%f) LEDS\n", ledInt, ledsOn);
+            this->render(ledInt, 0, 0, 255);
         }
 
         void blink(int count) {
             for (int i = 0; i < count; i++) {
-                Serial.println("Blink");
-                delayMicroseconds(1000 * 1000);
+                setAllLeds(0, 0, 255);
+                delayMicroseconds(1000 * 500);
+                setAllLeds(0, 255, 0);
+                delayMicroseconds(1000 * 500);
+                
             }
             
             //pixels_large.fill(pixels_large.Color(255, 0, 0), 0, COUNT_LARGE_STRIPE);
