@@ -7,6 +7,7 @@
 #include "config.h"
 
 LedWrapper wrapper;
+
 LedCommand* currentCommand = new IdleCommand(wrapper);
 WifiHandler wifi(wrapper);
 
