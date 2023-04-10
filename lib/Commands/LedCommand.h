@@ -33,6 +33,10 @@ class LedCommand {
             this->currentTick = 0;
         }
 
+        void SetBrightness(int brightness) {
+            wrapper.setBrightness(brightness);
+        }
+
     protected:
         LedWrapper wrapper;
         virtual void Update(int percent) {}
