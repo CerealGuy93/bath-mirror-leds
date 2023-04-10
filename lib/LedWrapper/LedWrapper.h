@@ -12,8 +12,8 @@
 class LedWrapper {
     public:
         LedWrapper() {
-            this->pixels_large = Adafruit_NeoPixel(COUNT_LARGE_STRIPE, PIN_LARGE_STRIPE, NEO_GRB + NEO_KHZ800);
-            this->pixels_short = Adafruit_NeoPixel(COUNT_SHORT_STRIPE, PIN_SHORT_STRIPE, NEO_GRB + NEO_KHZ800);
+            //this->pixels_large = Adafruit_NeoPixel(COUNT_LARGE_STRIPE, PIN_LARGE_STRIPE, NEO_GRB + NEO_KHZ800);
+            //this->pixels_short = Adafruit_NeoPixel(COUNT_SHORT_STRIPE, PIN_SHORT_STRIPE, NEO_GRB + NEO_KHZ800);
         }
 
         void setAllLeds(int r, int g, int b) {

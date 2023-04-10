@@ -1,25 +1,52 @@
 #include <Arduino.h>
+#include "WiFi.h"
 #include "LedCommand.h"
 #include "IdleCommand.h"
 #include "LedWrapper.h"
 #include "BrushCommand.h"
-#include "WifiHandler.h"
 #include "config.h"
+#include <AsyncTCP.h>
+#include <ESPAsyncWebserver.h>
 
 LedWrapper wrapper;
 LedCommand* currentCommand = new IdleCommand(wrapper);
-WifiHandler wifi(wrapper);
+//LedCommand* currentCommand = nullptr;
+//WifiHandler wifi(wrapper);
+
+AsyncWebServer* server = new AsyncWebServer(80);
 
 void setup() {
   Serial.begin(115200);
 
-  wifi.Setup();
+  Serial.printf("Connecting to %s ", SSID);
+
+  WiFi.begin(SSID, WLAN_PASS);
+  while (WiFi.status() != WL_CONNECTED) {
+      delay(500);
+      Serial.print(".");
+  }
+
+  Serial.println();
+  Serial.println("IP-Adress: " + WiFi.localIP().toString());
+
+
+  server->on("/on", HTTP_GET, [] (AsyncWebServerRequest *request) {
+    //currentCommand = new IdleCommand(wrapper);
+    Serial.println("Hallo from on");
+  });
+
+  server->on("/brushing", HTTP_GET, [] (AsyncWebServerRequest *request) {
+    //currentCommand = new BrushCommand(wrapper);
+    Serial.println("Hallo from brushing");
+  });
+
+  server->begin();
 }
 
 void loop() {
-  auto newCommand = wifi.CheckForNewCommand();
-  if (newCommand != nullptr)
-    currentCommand = newCommand;
+  //auto newCommand = wifi.CheckForNewCommand();
+  //if (newCommand != nullptr)
+  //  currentCommand = newCommand;
 
-  currentCommand->Execute();
+  //currentCommand->Execute();
 }
