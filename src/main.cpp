@@ -10,8 +10,6 @@
 
 LedWrapper wrapper;
 LedCommand* currentCommand = new IdleCommand(wrapper);
-//LedCommand* currentCommand = nullptr;
-//WifiHandler wifi(wrapper);
 
 AsyncWebServer* server = new AsyncWebServer(80);
 
@@ -31,22 +29,17 @@ void setup() {
 
 
   server->on("/on", HTTP_GET, [] (AsyncWebServerRequest *request) {
-    //currentCommand = new IdleCommand(wrapper);
-    Serial.println("Hallo from on");
+    currentCommand = new IdleCommand(wrapper);
   });
 
   server->on("/brushing", HTTP_GET, [] (AsyncWebServerRequest *request) {
-    //currentCommand = new BrushCommand(wrapper);
-    Serial.println("Hallo from brushing");
+    currentCommand = new BrushCommand(wrapper);
   });
 
   server->begin();
 }
 
 void loop() {
-  //auto newCommand = wifi.CheckForNewCommand();
-  //if (newCommand != nullptr)
-  //  currentCommand = newCommand;
-
-  //currentCommand->Execute();
+  if (currentCommand)
+    currentCommand->Execute();
 }
