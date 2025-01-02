@@ -1,18 +1,21 @@
 #ifndef LedCommand_H
 #define LedCommand_H
 
-#include "LedWrapper.h"
+#include <StaticStuff.h>
 
-class LedCommand {
+class Command {
     public:
         bool repeat = false;
 
-        LedCommand(LedWrapper wrapper, bool repeat, int tickMs = 1000, int ticksTotal = 100) {
-            this->wrapper = wrapper;
+        Command(void(*onFinish)(), bool repeat, int tickMs = 1000, int ticksTotal = 100) {
             this->repeat = repeat;
             this->currentTick = 0;
             this->tickMs = tickMs;
             this->ticksTotal = ticksTotal;
+
+            FastLED.clear();
+            FastLED.show();
+
         }
 
         void Execute() {
@@ -33,19 +36,15 @@ class LedCommand {
             this->currentTick = 0;
         }
 
-        void SetBrightness(int brightness) {
-            wrapper.setBrightness(brightness);
-        }
-
+        virtual void OnInit() {}
     protected:
-        LedWrapper wrapper;
         virtual void Update(int percent) {}
+        int ticksTotal;
 
     private:
         unsigned int lastCalled;
         int currentTick;
         int tickMs;
-        int ticksTotal;
 };
 
 #endif
