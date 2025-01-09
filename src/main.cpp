@@ -9,7 +9,7 @@
 #include <TimerCommand.h>
 #include <ChilModeCommand.h>
 
-int currentBrightness = 0;
+int currentBrightness = 3;
 
 Command* currentCommand = NULL;
 
@@ -61,11 +61,11 @@ void updateBrightness() {
     Serial.println("Brightness set to 2");
     currentBrightness++;
   } else if (currentBrightness == 3) {
-    FastLED.setBrightness(176);
+    FastLED.setBrightness(196);
     Serial.println("Brightness set to 3");
     currentBrightness++;
   } else if (currentBrightness == 4) {
-    FastLED.setBrightness(200);
+    FastLED.setBrightness(255);
     Serial.println("Brightness set to 4");
     currentBrightness = 0;
   }
